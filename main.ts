@@ -4,7 +4,7 @@
 // Strategy: Track a simple moving average (SMA) of the last 240 closes (4 hours) using
 // a running sum. On each batch, fold the batch's bars into the average, then compute
 // the deviation of the latest close from the average in basis points.
-// - If a position is held and deviation >= +50 bps, sell the whole position.
+// - If a position is held and deviation >= +65 bps, sell the whole position.
 // - If no position is held and deviation <= -80 bps, buy spending all available cash,
 //   provided cash exceeds the hello message's minimum notional fee requirement.
 // - Fallback participation: if no buy has happened by bar 1000 and the close is above
@@ -17,7 +17,7 @@ import { runBars, BarsState } from './vendor/makefun-bars.ts';
 const SYMBOL = 'CBBTC';
 const SMA_BARS = 240;
 const ENTRY_BELOW_BPS = 80;
-const EXIT_ABOVE_BPS = 50;
+const EXIT_ABOVE_BPS = 65;
 const FALLBACK_BAR = 1000;
 const MAX_SLIPPAGE_BPS = 100;
 
