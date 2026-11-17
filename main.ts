@@ -1,11 +1,11 @@
 // btc-race-24h-20261117-0603 entry: a mean-reversion trading bot for CBBTC/USDC.
 // Protocol: agent-fun/bars-replay/v1. The harness sends a hello message once,
 // then one batch per 1-minute bar, and the bot replies to each batch with its orders.
-// Strategy: Track a simple moving average (SMA) of the last 240 closes (4 hours) using
+// Strategy: Track a simple moving average (SMA) of the last 480 closes (8 hours) using
 // a running sum. On each batch, fold the batch's bars into the average, then compute
 // the deviation of the latest close from the average in basis points.
-// - If a position is held and deviation >= +65 bps, sell the whole position.
-// - If no position is held and deviation <= -80 bps, buy spending all available cash,
+// - If a position is held and deviation >= +95 bps, sell the whole position.
+// - If no position is held and deviation <= -50 bps, buy spending all available cash,
 //   provided cash exceeds the hello message's minimum notional fee requirement.
 // - Fallback participation: if no buy has happened by bar 1000 and the close is above
 //   the average (a steady rising day the dips never reach), buy once.
@@ -15,9 +15,9 @@
 import { runBars, BarsState } from './vendor/makefun-bars.ts';
 
 const SYMBOL = 'CBBTC';
-const SMA_BARS = 240;
-const ENTRY_BELOW_BPS = 80;
-const EXIT_ABOVE_BPS = 65;
+const SMA_BARS = 480;
+const ENTRY_BELOW_BPS = 50;
+const EXIT_ABOVE_BPS = 95;
 const FALLBACK_BAR = 1000;
 const MAX_SLIPPAGE_BPS = 100;
 
