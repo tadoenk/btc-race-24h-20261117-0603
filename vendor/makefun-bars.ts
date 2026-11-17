@@ -21,7 +21,7 @@
 //
 // Market model (contracts/bars-protocol.ts): orders decided on bar k fill at bar k + 1's open, moved by
 // the modelled slippage and by constant-product price impact against that bar's pool depth, so size
-// costs: a trade worth a USDC meets the factor 1 + a/D1 (+ a/D2 for a SOL-quoted asset's SOL leg),
+// costs: a trade worth a USDC meets the factor 1 + a/D1 (+ a/D2 for a SOL-quoted asset's SOL/USDC leg),
 // and the orders of one symbol at one open together pay what their sum would. Every bar carries the
 // pool depth at its open and its close (o_depth, c_depth: USDC raw units per hop); the fills a batch
 // carries were priced at its bars' o and o_depth. state.depthAt(symbol) is the latest close's depth,
@@ -110,7 +110,7 @@ export class OrderError extends Error {
 const U64_RE = /^(0|[1-9][0-9]{0,19})$/;
 const SYMBOL_RE = /^[A-Z0-9]{1,20}$/;
 const CLIENT_ID_RE = /^[A-Za-z0-9-][A-Za-z0-9_-]{0,63}$/;
-const KEYS = { buy: ['side', 'client_id', 'symbol', 'notional_quote_units', 'qty', 'max_slippage_bps'], sell: ['side', 'client_id', 'symbol', 'qty', 'max_slippage_bps'] };
+const KEYS = { buy: ['side', 'client_id', 'symbol', 'notional_quote_units', 'max_slippage_bps'], sell: ['side', 'client_id', 'symbol', 'qty', 'max_slippage_bps'] };
 
 /** Everything the bot knows, current before each callback. Unit-test a strategy with `s = new BarsState(hello); s.applyBatch(b)`. */
 export class BarsState {
